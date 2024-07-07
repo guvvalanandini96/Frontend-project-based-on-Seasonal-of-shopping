@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seasonal Clothing Suggestions - Seasonal Shopping</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .clothing-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #suggestions {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        #imageContainer {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .clothing-image {
+            width: 150px;
+            height: 150px;
+            margin: 10px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <body style=" background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCOTiyXyKUIkm-KlS7Kd67GG4C9_6FtI3mBQ&s'); background-size: cover; background-repeat: no-repeat; background-position: center; height:100vh;"></body>
+    <div class="clothing-container">
+        <h2>Seasonal Clothing Suggestions</h2>
+        <form id="clothing-form" action="#" method="POST">
+            <div class="form-group">
+                <label for="country">Select Country:</label>
+                <select id="country" name="country">
+                    <option value="">Select a country</option>
+                    <option value="australia">Australia</option>
+                    <option value="brazil">Brazil</option>
+                    <option value="canada">Canada</option>
+                    <option value="france">France</option>
+                    <option value="india">India</option>
+                    <option value="japan">Japan</option>
+                    <option value="south_africa">South Africa</option>
+                    <option value="united_states">United States</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="season">Select Season:</label>
+                <select id="season" name="season">
+                    <option value="spring">Spring</option>
+                    <option value="summer">Summer</option>
+                    <option value="autumn">Autumn</option>
+                    <option value="winter">Winter</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="gender">Select Gender:</label>
+                <input type="radio" id="male" name="gender" value="male" checked>
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="female">
+                <label for="female">Female</label>
+            </div>
+            <button type="button" onclick="showSuggestions()">Show Suggestions</button>
+        </form>
+        <div id="suggestions"></div>
+        <div id="imageContainer"></div>
+    </div>
+
+    <script>
+        function showSuggestions() {
+            var country = document.getElementById("country").value;
+            var season = document.getElementById("season").value;
+            var gender = document.querySelector('input[name="gender"]:checked').value;
+            var suggestions = document.getElementById("suggestions");
+            var imageContainer = document.getElementById("imageContainer");
+
+            // Clear previous suggestions and images
+            suggestions.innerHTML = "";
+            imageContainer.innerHTML = "";
+
+            // Generate suggestions based on country, season, and gender
+            var clothes = getClothingSuggestions(country, season, gender);
+            suggestions.innerHTML = "<h3>Suggested Clothes:</h3><ul>";
+            clothes.forEach(function(item) {
+                suggestions.innerHTML += "<li>" + item + "</li>";
+            });
+            suggestions.innerHTML += "</ul>";
+
+            // Display images of suggested clothes
+            clothes.forEach(function(item) {
+                var imageSrc = getClothingImageSrc(item, gender, country);
+                if (imageSrc) {
+                    var image = document.createElement("img");
+                    image.src = imageSrc;
+                    image.alt = item;
+                    image.className = "clothing-image";
+                    imageContainer.appendChild(image);
+                }
+            });
+        }
+
+        function getClothingSuggestions(country, season, gender) {
+            // Example clothing suggestions based on country, season, and gender
+            if (country === "australia") {
+                if (season === "spring" || season === "autumn") {
+                    if (gender === "male") {
+                        return ["Polo shirts", "Chino pants", "Loafers", "Sunglasses"];
+                    } else {
+                        return ["Midi dresses", "Cardigans", "Ballet flats", "Crossbody bags"];
+                    }
+                } else if (season === "summer") {
+                    if (gender === "male") {
+                        return ["T-shirts", "Shorts", "Sandals", "Hats"];
+                    } else {
+                        return ["Sundresses", "Tank tops", "Sandals", "Sun hats"];
+                    }
+                } else if (season === "winter") {
+                    if (gender === "male") {
+                        return ["Sweaters", "Jeans", "Boots", "Jackets"];
+                    } else {
+                        return ["Turtleneck sweaters", "Leggings", "Ankle boots", "Scarves"];
+                    }
+                }
+            } else if (country === "brazil") {
+                // Suggestions for Brazil
+                if (season === "spring" || season === "autumn") {
+                    if (gender === "male") {
+                        return ["Short-sleeve shirts", "Cargo shorts", "Flip-flops", "Sunscreen"];
+                    } else {
+                        return ["Tank tops", "Denim shorts", "Sandals", "Beach hats"];
+                    }
+                } else if (season === "summer") {
+                    if (gender === "male") {
+                        return ["Swim trunks", "Tank tops", "Sandals", "Sunglasses"];
+                    } else {
+                        return ["Bikinis", "Cover-ups", "Flip-flops", "Sun hats"];
+                    }
+                } else if (season === "winter") {
+                    if (gender === "male") {
+                        return ["Long-sleeve shirts", "Jeans", "Boots", "Jackets"];
+                    } else {
+                        return ["Sweaters", "Leggings", "Boots", "Scarves"];
+                    }
+                }
+            } else if (country === "canada") {
+                // Suggestions for Canada
+                if (season === "spring" || season === "autumn") {
+                    if (gender === "male") {
+                        return ["Light jackets", "Jeans", "Sneakers", "Hats"];
+                    } else {
+                        return ["Trench coats", "Jeans", "Ankle boots", "Scarves"];
+                    }
+                } else if (season === "summer") {
+                    if (gender === "male") {
+                        return ["T-shirts", "Shorts", "Sandals", "Hats"];
+                    } else {
+                        return ["Dresses", "Skirts", "Sandals", "Sun hats"];
+                    }
+                } else if (season === "winter") {
+                    if (gender === "male") {
+                        return ["Parkas", "Snow pants", "Snow boots", "Gloves"];
+                    } else {
+                        return ["Winter coats", "Sweaters", "Winter boots", "Beanies"];
+                    }
+                }
+            } else if (country === "france") {
+                // Suggestions for France
+                if (season === "spring" || season === "autumn") {
+                    if (gender === "male") {
+                        return ["Blazers", "Chinos", "Loafers", "Scarves"];
+                    } else {
+                        return ["Trench coats", "Blouses", "Skirts", "Ballerina flats"];
+                    }
+                } else if (season === "summer") {
+                    if (gender === "male") {
+                        return ["Linen shirts", "Shorts", "Espadrilles", "Panama hats"];
+                    } else {
+                        return ["Sundresses", "Sandals", "Straw hats", "Sunglasses"];
+                    }
+                } else if (season === "winter") {
+                    if (gender === "male") {
+                        return ["Wool coats", "Sweaters", "Boots", "Gloves"];
+                    } else {
+                        return ["Turtleneck sweaters", "Tights", "Boots", "Beanies"];
+                    }
+                }
+              
+            } else if (country === "india") {
+                // Suggestions for India
+                if (season === "spring" || season === "autumn") {
+                    if (gender === "male") {
+                        return ["Kurta shirts", "Chinos", "Juttis", "Sunglasses"];
+                    } else {
+                        return ["Anarkali suits", "Palazzos", "Kolhapuris", "Statement earrings"];
+                    }
+                } else if (season === "summer") {
+                    if (gender === "male") {
+                        return ["Cotton shirts", "Linen pants", "Sandals", "Hats"];
+                    } else {
+                        return ["Cotton sarees", "Kurtis", "Sandals", "Sun hats"];
+                    }
+                } else if (season === "winter") {
+                    if (gender === "male") {
+                        return ["Sherwanis", "Jeans", "Boots", "Shawls"];
+                    } else {
+                        return ["Pashmina shawls", "Sweaters", "Boots", "Scarves"];
+                    }
+                }
+            } else if (country === "japan") {
+                // Suggestions for Japan
+                if (season === "spring" || season === "autumn") {
+                    if (gender === "male") {
+                        return ["Yukata", "Hakama", "Geta sandals", "Sunglasses"];
+                    } else {
+                        return ["Kimono", "Obi belt", "Geta sandals", "Hairpins"];
+                    }
+                } else if (season === "summer") {
+                    if (gender === "male") {
+                        return ["Jinbei", "Sandals", "Hats", "Hand fans"];
+                    } else {
+                        return ["Yukata", "Sandals", "Hats", "Hand fans"];
+                    }
+                } else if (season === "winter") {
+                    if (gender === "male") {
+                        return ["Coats", "Scarves", "Boots", "Gloves"];
+                    } else {
+                        return ["Coats", "Scarves", "Boots", "Gloves"];
+                    }
+                }
+            } else if (country === "south_africa") {
+                // Suggestions for South Africa
+                if (season === "spring" || season === "autumn") {
+                    if (gender === "male") {
+                        return ["Short-sleeve shirts", "Shorts", "Sandals", "Sunglasses"];
+                    } else {
+                        return ["Sundresses", "Shorts", "Sandals", "Sun hats"];
+                    }
+                } else if (season === "summer") {
+                    if (gender === "male") {
+                        return ["Tank tops", "Swim trunks", "Flip-flops", "Sunscreen"];
+                    } else {
+                        return ["Bikinis", "Cover-ups", "Flip-flops", "Sun hats"];
+                    }
+                } else if (season === "winter") {
+                    if (gender === "male") {
+                        return ["Long-sleeve shirts", "Jeans", "Boots", "Jackets"];
+                    } else {
+                        return ["Sweaters", "Jeans", "Boots", "Scarves"];
+                    }
+                }
+            } else if (country === "united_states") {
+                // Suggestions for United States
+                if (season === "spring" || season === "autumn") {
+                    if (gender === "male") {
+                        return ["Light jackets", "Jeans", "Sneakers", "Hats"];
+                    } else {
+                        return ["Denim jackets", "Leggings", "Booties", "Scarves"];
+                    }
+                } else if (season === "summer") {
+                    if (gender === "male") {
+                        return ["T-shirts",  "Sneakers", "Baseball caps"];
+                    } else {
+                        return ["Tank tops",  "Sneakers", "Baseball caps"];
+                    }
+                } else if (season === "winter") {
+                    if (gender === "male") {
+                        return ["Winter coats", "Jeans", "Snow boots", "Beanies"];
+                    } else {
+                        return ["Winter coats", "Jeans", "Snow boots", "Beanies"];
+                    }
+                }
+            }
+
+            // Default suggestion if no match
+            return ["No suggestions available for this country, season, and gender"];
+        }
+
+        function getClothingImageSrc(item, gender, country) {
+            // Example image sources based on clothing item, gender, and country
+            // Replace these with your actual image paths
+
+            if (country === "australia") {
+                if (item === "Polo shirts") {
+                    return gender === "male" ? "https://i.pinimg.com/originals/1b/f6/4b/1bf64b66942898debb4ee1ef8782eac7.png " : "path/to/australia/female_polo_shirt.jpg";
+                } else if (item === "Chino pants") {
+                    return gender === "male" ? "https://www.jeanswholesaler.in/2022-thickbox_default/mens-regular-fit-6-colour-set-cotton-trouser-wj-0012.jpg" : "path/to/australia/female_chino_pants.jpg";
+                } else if (item === "Loafers") {
+                    return "https://www.shutterstock.com/image-photo/hipster-man-wear-fashion-shoes-260nw-1131380021.jpg";
+                } else if (item === "Sunglasses") {
+                    return "https://images.pexels.com/photos/46710/pexels-photo-46710.jpeg?cs=srgb&dl=pexels-nitin-creative-46710.jpg&fm=jpg";
+                } else if (item === "Midi dresses") {
+                    return "https://cdn.shopify.com/s/files/1/1415/7086/files/1800x900_x1300.png?v=1691391988";
+                } else if (item === "Cardigans") {
+                    return "https://i.ebayimg.com/images/g/CPwAAOSwxi1k4bHt/s-l1200.jpg";
+                } else if (item === "Ballet flats") {
+                    return "https://theuggboots.com.au/cdn/shop/products/GL7A2219.jpg?v=1669013920";
+                } else if (item === "Crossbody bags") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf2vyWeogPJf8dQvUQTakc9n_XbF3mjGztuM5pVaeTWg&s";
+                }
+                if (item === "T-shirts") {
+                    return gender === "male" ? "https://www.kosha.co/journal/wp-content/uploads/2022/08/word-image-7592-2.jpegh" : "path/to/australia/female_polo_shirt.jpg";
+                } else if (item === "Shorts") {
+                    return gender === "male" ? "https://contents.mediadecathlon.com/p2197356/20ec45d54c1ff25c1d2a554ad65cd203/p2197356.jpg?format=auto&quality=70&f=650x0" : "path/to/australia/female_chino_pants.jpg";
+                } else if (item === "Sandals") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmCNuKkOsyxf17Pl7vmFqYcrd-UYmzK-t_hJlxjWsJmw&s";
+                } else if (item === "Hats") {
+                    return "https://www.birdcollective.com/cdn/shop/collections/bird-hats-191525_1200x1200.jpg?v=1699321407";
+                } else if (item === "Sundresses") {
+                    return "https://m.media-amazon.com/images/I/81URL8JtwlL._AC_UY1100_.jpg";
+                } else if (item === "Tank tops") {
+                    return "https://img0.junaroad.com/uiproducts/19337140/zoom_0-1676301939.jpg";
+                } else if (item === "Sandals") {
+                    return "https://www.fizzygoblet.com/cdn/shop/products/Theofficedomestic1.jpg?v=1676289863";
+                    
+                }
+                if (item === "Sweaters") {
+                    return gender === "male" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9DD1B-K1MaSXws780wB8_VRoYFbptX-Z1f3idGG_YCQ&s": "";
+                } else if (item === "Jeans") {
+                    return gender === "male" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSanlZrYjhA39NV8Md-IXq0paJ-Ogbk1nw-8C9ZOW8LHA&s" : "";
+                } else if (item === "Boots") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJl4ojmgqnfHyBWH8pHhtIdQZ0B2Y892qHOzf-XR1-3A&s";
+                } else if (item === "Jackets") {
+                    return "https://images-cdn.ubuy.co.in/634f0fff3b3a5352c23812fa-tacvasen-men-39-s-cotton-jackets-winter.jpg";
+                } else if (item === "Turtleneck sweaters") {
+                    return "https://i.etsystatic.com/25183448/r/il/5c4c92/5114260577/il_570xN.5114260577_g5x7.jpg";
+                } else if (item === "Leggings") {
+                    return "https://m.media-amazon.com/images/I/711EEXFh7RL._AC_UY1100_.jpg";
+                } else if (item === "Ankle boots") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1rxZA9xmPwzT4pYr2LGub6HN30AGeEZPGIvOPjqs76g&s";
+                } else if (item === "Scarves") {
+                    return "https://elizabetta.net/cdn/shop/articles/article-header.jpg?v=1698858214&width=2800";
+                }
+
+            } else if (country === "brazil") {
+                // Paths for Brazil
+                if (item === "Short-sleeve shirts") {
+                    return gender === "male" ? "https://i.pinimg.com/736x/02/c9/ca/02c9ca0fddbe898ce51c09d962e8789f.jpg" : "";
+                } else if (item === "Cargo shorts") {
+                    return gender === "male" ? "https://images-cdn.ubuy.co.in/63400a18b4a16749b35987e6-mens-multi-pockets-fashion-cargo-shorts.jpg" : "";
+                } else if (item === "Flip-flops") {
+                    return "https://www.travelandleisure.com/thmb/8WgVl8pYHpvhIBu_o4Ot6NQ32WE=/fit-in/1500x2607/filters:no_upscale():max_bytes(150000):strip_icc()/tal-flip-flops-test-chaco-mens-lowdown-john-somerall-03-f96e9e673966474d83c7ef194ebc6ae6.jpeg";
+                } else if (item === "Sunscreen") {
+                    return "https://m.media-amazon.com/images/I/61DQvCh1JnL._AC_UF1000,1000_QL80_.jpg";
+                } else if (item === "Swim trunks") {
+                    return "https://images-cdn.ubuy.co.in/633fff772f719e689a6e79b3-basic-editions-women-39-s-swim.jpg";
+                } else if (item === "Tank tops") {
+                    return "https://img0.junaroad.com/uiproducts/19337140/zoom_0-1676301939.jpg";
+                } else if (item === "Denim shorts") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLFmaNXbtlit5ONVWd7IlhNJpUYuT2r9BzKIEJrxtFqg&s";
+                } else if (item === "Beach hats") {
+                    return "https://images-cdn.ubuy.co.in/6440dd26a3d5f00c1350e9eb-womens-beach-hat-portable-packable-roll.jpg";
+                }
+                if (item === "Swim trunks") {
+                    return gender === "male" ? "https://www.rankandstyle.com/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Frns-dev%2Fmedia%2F9cec1413-18d613e5-800x800-hero-image-(80).png&w=828&q=75" : "";
+                } else if (item === "Tank tops") {
+                    return gender === "male" ? "https://fitkin.in/cdn/shop/products/3c9a065e15d7d6ece_f737299b-bf89-460d-a6d9-f0ac6cdc7221.jpg?v=1619537173" : "";
+                } else if (item === "Sandals") {
+                    return "https://assetscdn1.paytm.com/images/catalog/product/F/FO/FOODENSITY-MEN-CORP28360EB5E8651/1564603639027_0..jpg?imwidth=540&impolicy=hq";
+                } else if (item === "Sunglasses") {
+                    return "https://media.gq.com/photos/65e20818d4da62fd0be68386/master/pass/best-sunglasses-art.jpg";
+                } else if (item === "Bikinis") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXzaVMj8L8SE3fODrbBna5FBHph8SGodf2QoKPa8a57A&s";
+                } else if (item === "Cover-ups") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuRZvP9hR4bMbItJhpA8Uht7Vp5rLwdBYLHnPw_P1vvA&s";
+                } else if (item === "Flip-flops") {
+                    return "https://www.okabashi.com/cdn/shop/products/baha-womens-flip-flops-black-656287.jpg?v=1708448042&width=360";
+                } else if (item === "Sun hats") {
+                    return "https://images-cdn.ubuy.co.in/659d4eeb3f23ad4980067f1e-sun-hat-womens-straw-hats-for-women.jpg";
+                }
+                if (item === "Long-sleeve shirts") {
+                    return gender === "male" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKb1LUNsgeb22CykIw-FobPSG_vio0rvXkgzwLHt88UA&s" : "";
+                } else if (item === "Jeans") {
+                    return gender === "male" ? "https://image.made-in-china.com/2f0j00HoMbUgTaIrki/Wholesale-Jeans-Men-s-Elastic-Straight-Denim-Pants-Slim-Fit-Trendy-Mens-Business-Formal-Suit-Pants.webp" : "";
+                } else if (item === "Boots") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQl4tVFrH6siAds99nL9Ri1wipKeZtUmqv0VL504en2sw&s";
+                } else if (item === "Jackets") {
+                    return "https://www.montecarlo.in/cdn/shop/products/223061834-2-38_6.jpg?v=1699078280";
+                } else if (item === "Sweaters") {
+                    return "https://assets.myntassets.com/dpr_1.5,q_60,w_400,c_limit,fl_progressive/assets/images/19798116/2022/9/9/bf5314fa-1208-4c4c-9945-9af4452ddc431662728283802-Computerised-Cable-Knit-Pattern-Sweater-291662728283275-1.jpg";
+                } else if (item === "Leggings") {
+                    return "https://ramrajcotton.in/cdn/shop/products/02-1_1024x.jpg?v=1633174908";
+                } else if (item === "Boots") {
+                    return "https://assets.ajio.com/medias/sys_master/root/20230724/NZtP/64be9276a9b42d15c96b252e/-473Wx593H-469510493-black-MODEL.jpg";
+                } else if (item === "Scarves") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeEAmBDY14Uh3fTaCuOT1rMWEJPfMPENG1PSx2t6_jCg&s";
+                }
+            } else if (country === "canada") {
+                // Paths for Canada
+                if (item === "Light jackets") {
+                    return gender === "male" ? "https://images-cdn.ubuy.co.in/6544cf72b2c43c55445d6513-weatherproof-original-mens-golf-jacket.jpg" : "";
+                } else if (item === "Jeans") {
+                    return gender === "male" ? "https://levi.in/cdn/shop/files/236770296_04_Side_e7d53e38-4fc4-4717-bf5f-4b1a2435a164.jpg?v=1712743269&width=1445" : "";
+                } else if (item === "Sneakers") {
+                    return "https://assets.ajio.com/medias/sys_master/root/20230228/z0n6/63fe1f06aeb26924e3993594/-473Wx593H-469435738-white-MODEL.jpg";
+                } else if (item === "Hats") {
+                    return "https://customlids.com/cdn/shop/files/CBLFoam.WebBanner.jpg?v=1709218669";
+                } else if (item === "Trench coats") {
+                    return "https://images-cdn.ubuy.co.in/635bcdadf4f8bc21cc0b1437-prinxy-coats-black-friday-clearance.jpg";
+                } else if (item === "Ankle boots") {
+                    return "https://images-cdn.ubuy.co.in/6542b9a384982648893de91d-okbop-women-s-low-heeled-ankle.jpg";
+                } 
+                else if (item === "Scarves") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeEAmBDY14Uh3fTaCuOT1rMWEJPfMPENG1PSx2t6_jCg&s";
+                }
+                if (item === "T-shirts") {
+                    return gender === "male" ? "https://assets.ajio.com/medias/sys_master/root/20230427/JPVF/64497d9b42f9e729d751f23a/-473Wx593H-466098941-multi-MODEL.jpg" : "";
+                } else if (item === "Shorts") {
+                    return gender === "male" ? "https://www-konga-com-res.cloudinary.com/w_400,f_auto,fl_lossy,dpr_3.0,q_auto/media/catalog/product/O/R/210201_1678376995.jpg" : "";
+                } else if (item === "Sandals") {
+                    return "https://www.switchbacktravel.com/sites/default/files/articles%20/Sports%20sandals%20%28hiking%20over%20log%20on%20beach%20in%20Chaco%20sandals%20-%20m%29.jpg";
+                } else if (item === "Hats") {
+                    return "https://cdn.shopify.com/s/files/1/0987/9106/files/Stratoliner_B_Soft_Felt_Fedora.png";
+                } else if (item === "Dresses") {
+                    return "https://assets.ajio.com/medias/sys_master/root/20230624/d2lM/64966b12a9b42d15c9ddcd02/-473Wx593H-465410816-burgundy-MODEL.jpg";
+                } else if (item === "Skirts") {
+                    return "https://britishretro.co.uk/wp-content/uploads/2019/08/Lindsay-tartan-skirt.jpg";
+                } else if (item === "Sandals") {
+                    return "https://images.meesho.com/images/products/76816764/imy6u_512.webp";
+                } else if (item === "Sun hats") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF3gWYF3hp3WgOLp0AZE_gQ69pFlvbeMt9Nzg6AG2c4A&s";
+                }
+                if (item === "Parkas") {
+                    return gender === "male" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBM2-q7Uqrxs2JQAPE721_TV5MSfZTMJ2KWFHai0l5CQ&s" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHdQPcJ2_iujuO9ldYRUZ4ZNoF6R-ekM2nv0rliWOhUmFiLctZSj30WpxDIBFAp096xP4&usqp=CAU";
+                } else if (item === "Snow pants") {
+                    return gender === "male" ? "https://www.switchbacktravel.com/sites/default/files/articles%20/Ski%20pant%20%28at%20resort%20in%20The%20North%20Face%20Freedom%20pants%20-%20m%29.jpg" : "";
+                } else if (item === "Snow boots") {
+                    return "https://www.alamodelabel.in/cdn/shop/files/3821DF2A-0EE3-4101-BAC2-A4128E55F631.jpg?v=1699360371";
+                } else if (item === "Gloves") {
+                    return "https://img.etimg.com/thumb/width-1200,height-900,imgsize-381312,resizemode-75,msid-104148490/top-trending-products/lifestyle/best-winter-gloves-for-unbeatable-comfort-and-protection.jpg";
+                } else if (item === "Winter coats") {
+                    return "https://images-cdn.ubuy.co.in/634e333eb6385819841580f6-winter-coats-for-women-hooded-warm.jpg";
+                } else if (item === "Sweaters") {
+                    return "https://m.media-amazon.com/images/I/71PIJ0FXJ3L._AC_UY1100_.jpg";
+                } else if (item === "Winter boots") {
+                    return "https://m.media-amazon.com/images/I/81m7gNHQfxL._AC_UY300_.jpg";
+                } else if (item === "Beanies") {
+                    return "https://m.media-amazon.com/images/I/41YmxLU4ZTL._AC_UF1000,1000_QL80_.jpg";
+                }
+            } else if (country === "france") {
+                // Paths for France
+                if (item === "Blazers") {
+                    return gender === "male" ? "https://5.imimg.com/data5/IO/GX/MY-52007843/cotton-summer-casual-blazers.jpg" : "";
+                } else if (item === "Chinos") {
+                    return gender === "male" ? "https://assets.ajio.com/medias/sys_master/root/20230629/PNH8/649ccb53a9b42d15c91b0267/-473Wx593H-466003356-grey-MODEL.jpg" : "";
+                } else if (item === "Loafers") {
+                    return "https://www.jiomart.com/images/product/original/rvusaqycto/rzisbo-loafers-shoes-for-men-black-product-images-rvusaqycto-0-202302081658.jpg?im=Resize=(500,630)";
+                } else if (item === "Scarves") {
+                    return "https://www.mensjournal.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTk2MTM1ODk0MjQyODI5ODI5/scarves1.jpg";
+                } else if (item === "Trench coats") {
+                    return "https://hips.hearstapps.com/hmg-prod/images/guest-wears-beige-trench-coat-brown-bag-and-a-guest-wears-news-photo-1695751724.jpg?crop=0.668xw:1.00xh;0.192xw,0&resize=640:*";
+                } else if (item === "Blouses") {
+                    return "https://i.ebayimg.com/images/g/t-QAAOSwNaJiN-sy/s-l1200.webp";
+                } else if (item === "Skirts") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3nKpPQdk9NS_P1VnHQVtWvNh4sBeIJEY2NcLImPMztg&s";
+                } else if (item === "Ballerina flats") {
+                    return "https://images.theconversation.com/files/541170/original/file-20230804-25-22wyvj.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1000&fit=clip";
+                }
+                if (item === "Linen shirts") {
+                    return gender === "male" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEa0RWX5DdSQxrdOnveDur1I5e6eptR7tdHhpA-Z_IxQ&s" : "";
+                } else if (item === "Shorts") {
+                    return gender === "male" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRw4nnake0uy4wG7v0kg5UedB_a1ZPlqyk-2OaOOLD9qg&s" : "";
+                } else if (item === "Espadrilles") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVPmpuuBBV7hrtgMMqcA1H3VHHrHezMXSFo0KZDjGxKQ&s";
+                } else if (item === "Panama hats"){
+                    return "https://panamajack.com/cdn/shop/products/2R2A1434---Optimized_620x.jpg?v=1689952401";
+                
+                } else if (item === "Sundresses") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjUqBExG_ZnytY6VJ-uZJmvDlKtAoX-SJQzBr9DkzH4g&s";
+                } else if (item === "Sandals") {
+                    return "https://assets.ajio.com/medias/sys_master/root/20230628/nBlq/649c3a26eebac147fc2c2a89/-473Wx593H-466317875-copper-MODEL.jpg";
+                } else if (item === "Straw hats") {
+                    return "https://images.boardriders.com/global/roxy-products/all/default/large/arjha03477_roxy,l_yef0_frt1.jpg";
+                } else if (item === "Sunglasses") {
+                    return "https://m.media-amazon.com/images/I/713BH6KAreL._AC_UY350_DpWeblab_.jpg";
+                }
+                if (item === "Wool coats") {
+                    return gender === "male" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPJ-RjXn1DbAj7_V5n7NF7Dk8thqwxyQuNda5940WxQQ&s" : "";
+                } else if (item === "Sweaters") {
+                    return gender === "male" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2T1tQBFAZgD6Xd9Pls2lFCuwV4FZh9OhbAyggG87hYA&s" : "";
+                } else if (item === "Boots") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0etw2RztVBwaeBJUAPvyRn3VUPI8ym1V0wUdLEyLOVA&s";
+                } else if (item === "Gloves") {
+                    return "https://assets.ajio.com/medias/sys_master/root/20230921/7Usa/650b7376ddf7791519ec8325/-473Wx593H-466607949-grey-MODEL.jpg";
+                } else if (item === "Turtleneck sweaters") {
+                    return "https://5.imimg.com/data5/SELLER/Default/2022/9/KM/FO/IV/138418291/160f4a1d977d44e399779d5c2464477a-w1000-q90-500x500.jpeg";
+                } else if (item === "Tights") {
+                    return "https://www.jiomart.com/images/product/original/rv5dw17ide/donson-opaque-tights-for-women-high-waist-control-top-pantyhose-tights-for-winter-free-size-black-product-images-rv5dw17ide-0-202308031557.jpg?im=Resize=(500,630)";
+                } else if (item === "Boots") {
+                    return "https://www.jomercer.com.au/cdn/shop/products/Social_TexBlack3.jpg?v=1698989206";
+                } else if (item === "Beanies") {
+                    return "https://m.media-amazon.com/images/I/718LEWqE1dL._AC_UY1100_.jpg";
+                }
+            }else if (country === "india") {
+                // Paths for India
+                if (item === "Kurta shirts") {
+                    return gender === "male" ? "https://5.imimg.com/data5/MQ/IQ/WD/SELLER-5397941/mens-kurta-shirt.jpg" : "";
+                } else if (item === "Chinos") {
+                    return gender === "male" ? "https://www.beyoung.in/api/cache/catalog/products/new_chinos_update_image_23_9_2022/pale_green_chinos_for_men_base_25_1_2023_700x933.jpg" : "";
+                } else if (item === "Juttis") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTlH4-9P6IwjD_wOotbawAuUEAOUm9D6XwA2ufJ-fvHg&s";
+                } else if (item === "Sunglasses") {
+                    return "https://india.ray-ban.com/media/wysiwyg/Rb-M-sunglasses_clp_opti/08_Sunglasses_Page_Hero_Banner_Mobile_-_675x1200px.jpg";
+                } else if (item === "Anarkali suits") {
+                    return "https://assets.panashindia.com/media/catalog/product/7/9/791kr04-gftrgnpnk176.jpg";
+                } else if (item === "Palazzos") {
+                    return "https://saadaa.in/cdn/shop/products/1_dfdaa56f-9d9f-4144-9590-c431f49c6d70.jpg?v=1694160358&width=1350";
+                } else if (item === "Kolhapuris") {
+                    return "https://i.etsystatic.com/31149385/r/il/4e894b/4095985245/il_570xN.4095985245_gyvj.jpg";
+                } else if (item === "Statement earrings") {
+                    return "https://rubans.in/cdn/shop/files/rhodium-plated-zirconia-pave-studded-drop-statement-earrings-earrings-34439035814062.jpg?v=1692940416";
+                }
+                // Paths for India
+                if (item === "Cotton shirts") {
+                    return gender === "male" ? "https://assets.myntassets.com/h_1440,q_100,w_1080/v1/assets/images/1352820/2022/7/20/3477af99-9ab7-4786-b0b0-120fd3908ebf1658313200930-Mast--Harbour-Men-Blue-Solid-Casual-Pure-Cotton-Shirt-180165-1.jpg" : "";
+                } else if (item === "Linen pants") {
+                    return gender === "male" ? "https://www.andamen.com/cdn/shop/products/01_ffe1adb1-e49e-443f-a3ac-f78e28422ccb.jpg?v=1682510913" : "";
+                } else if (item === "Sandals") {
+                    return "https://nostrain.in/cdn/shop/files/grey-cork-sandal-men.webp?v=1699528605&width=2048";
+                } else if (item === "Hats") {
+                    return "https://tenthstreethats.com/cdn/shop/collections/STETSON_HATS_10TH_STREET_HERO.jpg?v=1680660380";
+                } else if (item === "Cotton sarees") {
+                    return "https://img.serialxpress.com/2023/03/06/upcoming-twist-1678089764.jpg";
+                } else if (item === "Kurtis") {
+                    return "https://st1.bollywoodlife.com/wp-content/uploads/photos/yeh-rishta-kya-kehlata-hai-actress-shivangi-joshi-looks-ethereal-in-an-all-white-ensemble-201910-1493777.jpg";
+                } else if (item === "Sandals") {
+                    return "https://assets.ajio.com/medias/sys_master/root/20230629/VS4o/649cb8fbeebac147fc2e973e/-473Wx593H-465974244-blue-MODEL.jpg";
+                } else if (item === "Sun hats") {
+                    return "https://hips.hearstapps.com/hmg-prod/images/elm050120shops-073b-1648571455.jpg?crop=1.00xw:0.339xh;0,0.353xh&resize=640:*";
+                }
+             
+                if (item === "Sherwanis") {
+                    return gender === "male" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS517V7FJviC5QLHeImZMPc4L4I6nFUs3BDZouENd_7-g&s" : "";
+                } else if (item === "Jeans") {
+                    return gender === "male" ? "https://assets.myntassets.com/h_1440,q_100,w_1080/v1/assets/images/5669588/2018/6/12/0dcec4bb-3be9-4c67-9d9a-ecdcc937f98d1528807434080-Roadster-Men-Blue-Skinny-Fit-Mid-Rise-Mildly-Distressed-Stretchable-Jeans-4491528807433906-1.jpg" : "";
+                } else if (item === "Boots") {
+                    return "https://i.pinimg.com/736x/f5/a2/04/f5a20491c15eb8cbfc0fff784fd46803.jpg";
+                } else if(item === "Shawls"){
+                    return "https://www.kcsshop.in/wp-content/uploads/2022/10/kcs-400-1.jpg";
+                } else if (item === "Pashmina shawls") {
+                    return "https://www.kashmirvilla.com/cdn/shop/products/ecru-beige-colour-basohli-pashmina-shawl-shawls-845.jpg?v=1647351389&width=2048";
+                } else if (item === "Sweaters") {
+                    return "https://asset20.ckassets.com/blog/wp-content/uploads/sites/5/2022/11/11-Best-Womens-Sweaters-in-India.jpg";
+                } else if (item === "Boots") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRERnWoAEjqMuf-x0IdDL16NqhTqVxC19qEUWkcnuH8tw&s";
+                } else if (item === "Scarves") {
+                    return "https://assets.myntassets.com/dpr_1.5,q_60,w_400,c_limit,fl_progressive/assets/images/16948012/2022/4/21/ea059551-9e71-43c2-946d-70a55551fd0e1650519042980ClothHausIndiaWomenBlueWhitePrintedScarf1.jpg";
+                }                                   
+            } else if (country === "japan") {
+                // Paths for Japan
+                if (item === "Yukata") {
+                    return gender === "male" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2ZApgi8y7gUVkNJdb01A7i287bgBQAc4IbuD4uwPtyA&s" : "";
+                } else if (item === "Hakama") {
+                    return gender === "male" ? "https://i.etsystatic.com/8762464/r/il/af7f44/3398472714/il_570xN.3398472714_tfyp.jpg" : "";
+                    
+                } else if (item === "Sunglasses") {
+                    return "https://pretavoir.co.uk/cdn/shop/articles/JAPANESE_EYEWEAR.jpg?v=1681919475";
+                } else if (item === "Kimono") {
+                    return "https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_3000,h_2000,f_auto/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/ez7uvnxigexkim9fseyb/Kimono-okKimonoRental,Kyoto,Japan-KlookIndia.jpg";
+                } else if (item === "Obi belt") {
+                    return "https://eiyokimono.com/cdn/shop/products/japanese-obi-belt-eiyo-kimono-4_800x.jpg?v=1633212079";
+                } else if (item === "Hairpins") {
+                    return "https://m.media-amazon.com/images/I/71mEtF1mX4L.jpg";
+                }
+                if (item === "Jinbei") {
+                    return gender === "male" ? "https://cdn.shopify.com/s/files/1/0255/2984/3805/files/jinbei_homme_1024x1024.jpg?v=1606051488" : "";
+                } else if (item === "Sandals") {
+                    return gender === "male" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2ERrKIrn99UAkFxijECqHd6Kao31-3XVtl9CzdVrHFQ&s" : "";
+                } else if (item === "Hats") {
+                    return "https://m.media-amazon.com/images/I/61B83hPQKaL._AC_SX522_.jpg";
+                } else if (item === "Hand fans") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHzOrXzvwBq-bs1G7Cz5DK2vW0iiDKbFZvID2cys_Zig&s";
+                } else if (item === "Hats"){
+                    return "https://web-japan.org/trends/11_fashion/images/fasg120126.jpg";
+                } else if (item === "Yukata") {
+                    return "https://cdn.shopify.com/s/files/1/0014/2111/5464/files/clear.jpg?16307";
+                } else if (item === "Hand fans") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHzOrXzvwBq-bs1G7Cz5DK2vW0iiDKbFZvID2cys_Zig&s";
+                }
+                if (item === "Coats") {
+                    return gender === "male" ? "https://sc02.alicdn.com/kf/HTB16s63SFXXXXbTXFXXq6xXFXXXn/top-sale-thick-japanese-happi-coat.jpg" : "https://i.pinimg.com/564x/76/af/87/76af877607e321b50375396ab8b71acb.jpg";
+                } else if (item === "Scarves") {
+                    return gender === "male" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRh7MqfKe-hGcf-Hi_imRidhTlx4P8NSxPb49tCidk07g&s" : "https://m.media-amazon.com/images/I/81smv1jLG9L.jpg";
+                } else if (item === "Boots") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrvMBtVSQDEAoLdnb2CN6QWPLaerrzVUizMsFnWGuieg&s";
+                } else if (item === "Gloves") {
+                    return "https://image.made-in-china.com/318f0j00rEIfmHeyOLpY/JL20801-001-mp4.webp";
+                } else if (item === "Scarves") {
+                    return "https://m.media-amazon.com/images/I/81smv1jLG9L.jpg";
+                } else if (item === "Boots") {
+                    return "https://c8.alamy.com/comp/C8E7FX/japanese-women-tourists-legs-with-stocking-socks-and-boots-detail-C8E7FX.jpg";
+                } else if (item === "Gloves") {
+                    return "https://image.made-in-china.com/318f0j00rEIfmHeyOLpY/JL20801-001-mp4.webp";
+                }     
+            } else if (country === "south_africa") {
+                // Paths for South Africa
+                if (item === "Short-sleeve shirts") {
+                    return gender === "male" ? "https://media.gq.com/photos/61ef317bea362c0f8b862d81/4:3/w_1500,h_1125,c_limit/012422-shirts-for-men-lead.jpg" : "";
+                } else if (item === "Shorts") {
+                    return gender === "male" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWsfFVg7es-HSD63lY0ZZPb82CyKl0do6OY-G2sA1Qjg&s" : "https://assets.ajio.com/medias/sys_master/root/20220812/fNh3/62f66dd0aeb26921afe6d400/-473Wx593H-469230968-blue-MODEL.jpg";
+                } else if (item === "Sandals") {
+                    return "https://jerusalemsandals.com/cdn/shop/files/ji5.png?v=1709020353";
+                } else if (item === "Sunglasses") {
+                    return "https://5.imimg.com/data5/IOS/Default/2023/9/344609082/NE/VE/QX/122464219/product-jpeg-500x500.png";
+                } else if (item === "Sundresses") {
+                    return "https://i.pinimg.com/736x/11/c6/10/11c61033c31958f98dd3e92f0363e520.jpg";
+                } else if (item === "Tank tops") {
+                    return "https://www.wildfox.com/cdn/shop/files/Untitled_design_-_2024-02-14T174658.665.png?v=1707961635&width=1500";
+                } else if (item === "Denim shorts") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHEMSGLN7JiYmUbfsrIM6hFuxBSZA5F4k1pe7rAjsycQ&s";
+                } else if (item === "Sun hats") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyRRRcx9fej19Ogx2317biQRWK0h5jHuQ-buSpWLPmag&s";
+                }
+                if (item === "Tank tops") {
+                    return gender === "male" ? "https://m.media-amazon.com/images/S/aplus-media-library-service-media/5c9cc052-3071-4892-9d81-d9820e8655af.__CR0,0,362,453_PT0_SX362_V1___.jpg" : "path/to/south_africa/female_short_sleeve_shirts.jpg";
+                } else if (item === "Swim trunks") {
+                    return gender === "male" ? "https://lecluboriginal.com/cdn/shop/files/2023-03-Le-Club_2023_03_21_5273_x800.webp?v=1680194306" : "path/to/south_africa/female_shorts.jpg";
+                } else if (item === "Flip-flops") {
+                    return "https://media.gq.com/photos/64a6e38586fb14a13de77295/3:2/w_1686,h_1124,c_limit/best-sandals-art.jpg";
+                } else if (item === "Sunscreen") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJTF_Osk7VxDOiDD0eGdePrmPCw9KgRE8oTBxMxT36fw&s";
+                } else if (item === "Bikinis") {
+                    return "https://media.istockphoto.com/id/1414599243/photo/two-beautiful-young-woman-sitting-by-the-poolside-of-a-resort-swimming-pool-during-summer.jpg?s=612x612&w=0&k=20&c=D01VSG7gWlXw2sDVpRKYrT4zY8sLoz9L1M2VWb4YpTg=";
+                } else if (item === "Cover-ups") {
+                    return "https://m.media-amazon.com/images/I/81K8CvblVGL._AC_UY1100_.jpg";
+                } else if (item === "Flip-flops") {
+                    return "https://assets-global.website-files.com/6586ad1766809383c71cd41e/6588e8bab0f3006dbc1d00d2_Flip-Flop.jpeg";
+                } else if (item === "Sun hats") {
+                    return "https://media.glamourmagazine.co.uk/photos/62a06c0af321fea9799cfd4b/3:2/w_771,h_514,c_limit/SUN%20HATS%20080622%20SQUARE.jpg";
+                }
+                
+                if (item === "LOng-sleeve shirts") {
+                    return gender === "male" ? "https://5.imimg.com/data5/ECOM/Default/2023/10/350537514/OQ/GP/RM/137892235/74504c50-7177-4576-96ee-656fc1b500f7-500x500.jpg" : "path/to/united_states/female_light_jackets.jpg";
+                } else if (item === "Jeans") {
+                    return gender === "male" ? "https://media.gettyimages.com/id/186870715/photo/blue-jeans.jpg?s=612x612&w=gi&k=20&c=QmlgPNArpUCfP43m4iGiGVsBGyAjEiMrRO4sP2Hh1Dw=" : "https://assets.ajio.com/medias/sys_master/root/20221019/4ikf/634fd570aeb269659c4d8a57/-473Wx593H-441148958-darkblue-MODEL.jpg";
+                } else if (item === "Boots") {
+                    return "https://media.istockphoto.com/id/1348707285/photo/stylish-woman-tying-shoelace-of-black-ankle-boot.jpg?s=612x612&w=0&k=20&c=xqVqe1sedIgkMXGkUBt5WaCkzQVdrIRAo8xBbhUSHHA=";
+                } else if (item === "Jackets") {
+                    return "https://5.imimg.com/data5/SELLER/Default/2023/10/355883154/UO/RV/ED/61259432/men-winter-fashion-jacket-500x500.jpeg";
+                } else if (item === "Sweaters") {
+                    return "https://www.alamodelabel.in/cdn/shop/products/WhatsAppImage2022-10-07at2.04.30PM.jpg?v=1665137499";
+                } else if (item === "Jeans") {
+                    return "https://assets.ajio.com/medias/sys_master/root/20221019/4ikf/634fd570aeb269659c4d8a57/-473Wx593H-441148958-darkblue-MODEL.jpg";
+                } else if (item === "Boots") {
+                    return "https://media.istockphoto.com/id/1348707285/photo/stylish-woman-tying-shoelace-of-black-ankle-boot.jpg?s=612x612&w=0&k=20&c=xqVqe1sedIgkMXGkUBt5WaCkzQVdrIRAo8xBbhUSHHA=";
+                } else if (item === "Scarves") {
+                    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzKJAJT01K5ijhGK5BhrVIerOIaiE7dB4X0R3VwLvgSA&s";
+                }
+            } else if (country === "united_states") {
+    // Paths for United States
+    if (item === "Light jackets") {
+        return "https://hips.hearstapps.com/hmg-prod/images/8-65aed8907304c.jpg?resize=2048:*";
+    } else if (item === "Jeans") {
+        return "https://d1fufvy4xao6k9.cloudfront.net/images/blog/posts/2023/10/hockerty_black_jeans_and_boots_for_men_massimo_dutti_photoshoot_ca7f7d8e_2b72_450e_bf80_4d677404a579.jpg";
+    } else if (item === "Sneakers") {
+        return "https://img.joomcdn.net/af9a742c1105eee68771240e746393c09c52e3a0_original.jpeg";
+    } else if (item === "Hats") {
+        return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqAlnuOM7ye0uyAJVO13wBNTH1zJP6lP0pPYoNhzaWsQ&s";
+    } else if (item === "Denim jackets") {
+        return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDcHRvYU5vPsB7Dap-UbiVn7kcnjVfdVewsA&s";
+    } else if (item === "Leggings") {
+        return "https://ae01.alicdn.com/kf/Sfb911793893d4d51abe551271c8489db3.jpg_640x640Q90.jpg_.webp";
+    } else if (item === "Booties") {
+        return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhGaaHVtX0scNfcL_K2qU9B8Qk2pTS5alFszceR820nQ&s";
+    } else if (item === "Scarves") {
+        return "https://i.pinimg.com/originals/f8/60/dc/f860dced590ceb3c5b58ff5707348ed5.jpg";
+    }
+    if (item === "T-shirts") {
+        return "https://images-cdn.ubuy.co.in/64b1abb610f2b20fcb19f3d3-united-states-map-t-shirt-usa-t-shirt.jpg";
+    } else if (item === "shorts") {
+        return gender === "female" ? "https://m.media-amazon.com/images/I/61hK+qbb4iL._AC_UY1100_.jpg" : "https://contents.mediadecathlon.com/p2197356/20ec45d54c1ff25c1d2a554ad65cd203/p2197356.jpg?format=auto&quality=70&f=650x0";
+    } else if (item === "Sneakers") {
+        return gender === "male" ? "https://img.etimg.com/thumb/width-1600,height-900,imgsize-16530,resizemode-75,msid-101737945/top-trending-products/lifestyle/6-best-selling-us-polo-assn-sneakers-for-men-for-luxury-and-comfort.jpg" : "https://www.panaprium.com/cdn/shop/articles/affordable_shorts_made_in_USA_1000.jpg?v=1625449384";
+    } else if (item === "Baseball caps") {
+        return gender === "male" ? "https://m.media-amazon.com/images/I/71I3TJMpqCL._AC_UY1100_.jpg" : "https://cms.cloudinary.vpsvc.com/images/c_scale,dpr_auto,f_auto,q_70,w_auto:50:550/legacy_dam/en-us/S001641606/MXP23602-Trucker-Hat-Product-Tile-001?cb=ecf58b02828350e4b6ef9eba649ab880bda83e18";
+    } else if (item === "Tank tops") {
+        return "https://images-cdn.ubuy.co.in/634eec2d203b8e4fc21551f2-kcdigr-chiffon-tank-tops-women-summer.jpg";
+    } if (item === "Winter coats") {
+                    return gender === "male" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdxFznLlE63tJNoG74e4XQ1R0eAUD5Te8o0Q&s" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9Co0RTAfRpkSyeG7MINOoGd7o8L5wyrcgSw&s";
+                } else if (item === "Jeans") {
+                    return gender === "male" ? "https://5.imimg.com/data5/SELLER/Default/2023/6/316914460/SF/GA/DB/190646790/us-polo-jeans-for-mens.jpeg" : "https://i.pinimg.com/736x/cf/13/3e/cf133ed752c114b370128301fbf8abf4.jpg";
+                } else if (item === "Snow boots") {
+                    return gender === "male" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUQPoGp9X8XmzB4Ap8_NqxnvJGInHK5XHqt7dTrJUgNQ&s" : "https://m.media-amazon.com/images/S/mms-media-storage-prod/final/BrandPosts/brandPosts/42f66f03-1afb-4924-b1f6-d0ae88c7889c/257edbfc-7d15-4df3-b532-c820a0560f21/media._SL480_.jpeg";
+                } else if (item === "Beanies") {
+                    return gender === "male" ? "https://i.insider.com/63da953e0a08ae0018a6577d?width=900&format=jpeg&auto=webp": "https://m.media-amazon.com/images/I/81Rv1VP4okL._AC_UY350_.jpg";
+                } 
+                               
+            }
+            
+            return null;
+        }
+    </script>
+</body>
+</html>
+
+            
+           
+            
+                               
+           

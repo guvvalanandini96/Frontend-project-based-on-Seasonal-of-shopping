@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forgot Password - Seasonal Shopping</title>
+<style>
+    body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0; /* Change background color as needed */
+}
+
+.forgot-password-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 100px auto;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+</style>
+<script>
+  function validateForm() {
+    var email = document.getElementById("email").value;
+
+    if (email.trim() == "") {
+      alert("Please enter your email.");
+      return false;
+    }
+
+    // You can add more validation if needed
+
+    return true;
+  }
+</script>
+</head>
+<body>
+  <body style=" background-image: url('https://www.shutterstock.com/image-photo/woman-walking-shopping-bags-christmas-260nw-333722087.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center; height:100vh;">
+<div class="forgot-password-container">
+  <h2>Forgot Password</h2>
+  <form id="forgot-password-form" action="#" method="POST" onsubmit="return validateForm()">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <button type="submit"><a href="submit.html">Submit</a></button>
+  </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seasonal Shopping </title>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<style>
+    body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+/* styles.css */
+
+body {
+    background-image: url('/static/background-image.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+input[type=text]{
+    width:25%;
+    margin:10px;
+    padding: 10px;
+    display: line-block;
+}
+input[type=password]{
+    width:25%;
+    margin:10px;
+    padding: 10px;
+    display: line-block;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: green;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: green;
+}
+
+a {
+  display: block;
+  margin-top: 10px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+</style>
+<script>
+  function validateForm() {
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+
+    if (username.trim() == "") {
+      alert("Please enter your username.");
+      return false;
+    }
+
+    if (password.trim() == "") {
+      alert("Please enter your password.");
+      return false;
+    }
+
+    return true;
+  }
+</script>
+<body style=" background-image: url('https://media.istockphoto.com/id/1175412224/photo/woman-buying-clothes-at-department-store-stock-photo.webp?b=1&s=170667a&w=0&k=20&c=H4WQNkDm2BWAYPX0LFXviva6Y715h1n2B3HUj7sizc4='); background-size: cover; background-repeat: no-repeat; background-position: center; height:100vh;">
+<div class="login-container">
+  <h2>Seasonal Shopping</h2>
+  <form id="login-form" action="#" method="POST" onsubmit="return validateForm()">
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <button type="submit"><a href="suggestions.html">Login</a></button>
+    
+    <a href="forgot.html">Forgot Password?</a>
+    <p>Don't have an account?<center> <a href="Register.html">Register here</center></a></p>
+    </div>
+  </div>
+  </form>
+</div>
+
+</body>
+</html>
